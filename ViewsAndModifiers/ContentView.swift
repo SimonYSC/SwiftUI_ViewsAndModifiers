@@ -30,12 +30,32 @@ struct GridStack<Content: View>: View {
         self.content = content
     }
 }
+
+struct ProminentTitle: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .font(.largeTitle)
+            .foregroundColor(/*@START_MENU_TOKEN@*/.blue/*@END_MENU_TOKEN@*/)
+    }
+}
+
+extension View {
+    func titleStyle() -> some View {
+        self.modifier(ProminentTitle())
+    }
+}
+
 struct ContentView: View {
     var body: some View {
-        GridStack(rows: 4, columns: 4) { row, col in
-            HStack {
-                Image(systemName: "\(row * 4 + col).circle")
-                Text("R\(row) C\(col)")
+        VStack {
+            Text("Grid")
+                .titleStyle()
+                .padding()
+            GridStack(rows: 4, columns: 4) { row, col in
+                HStack {
+                    Image(systemName: "\(row * 4 + col).circle")
+                    Text("R\(row) C\(col)")
+                }
             }
         }
     }
